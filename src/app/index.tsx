@@ -37,24 +37,68 @@ export default function Home() {
   // 👉 Antes de implementar, revisa el TSDoc de `calcularValor` (src/domain/counter.ts):
   //    ahí está el contrato; tú escribes el cómo.
   const incrementar = () => {
-    
+    setValor(calcularValor(config, 'incrementar'));
   };
+
   const decrementar = () => {
-    
+    setValor(calcularValor(config, 'decrementar'));
   };
+
   const reiniciar = () => {
-    
+    setValor(0);
+  };
+
+  // CHECK: contador de Empanadas
+  const [empanadas, setEmpanadas] = useState(0);
+  const configEmpanadas: ContadorConfig = {
+    valor: empanadas,
+    paso: 1,
+    minimo: 0,
+    maximo: 10,
+  };
+  const estadoEmpanadas = estadoUI(empanadas, configEmpanadas);
+
+  const incrementarEmpanadas = () => {
+    setEmpanadas(calcularValor(configEmpanadas, 'incrementar'));
+  };
+
+  const decrementarEmpanadas = () => {
+    setEmpanadas(calcularValor(configEmpanadas, 'decrementar'));
+  };
+
+  const reiniciarEmpanadas = () => {
+    setEmpanadas(0);
+  };
+
+  // CHECK: contador de Jugos
+  const [jugos, setJugos] = useState(0);
+  const configJugos: ContadorConfig = {
+    valor: jugos,
+    paso: 1,
+    minimo: 0,
+    maximo: 10,
+  };
+  const estadoJugos = estadoUI(jugos, configJugos);
+
+  const incrementarJugos = () => {
+    setJugos(calcularValor(configJugos, 'incrementar'));
+  };
+
+  const decrementarJugos = () => {
+    setJugos(calcularValor(configJugos, 'decrementar'));
+  };
+
+  const reiniciarJugos = () => {
+    setJugos(0);
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Bar Salesiano · Contadores</Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.title}>Bar Salesiano</Text>
 
-        {/* 📖 ¿Qué props acepta? Revisa el TSDoc de <ContadorDisplay> */}
-        <ContadorDisplay valor={valor} etiqueta="Sanduches" />
-
-        {/* 📖 Revisa el TSDoc de <BotonContador>: props, variantes y feedback */}
+        {/* Contador principal: Sánduches */}
+        <ContadorDisplay valor={valor} etiqueta="Sánduches" />
         <View style={styles.actions}>
           <BotonContador
             label="+1"
@@ -68,34 +112,81 @@ export default function Home() {
             variante="secondary"
             disabled={estado === 'MINIMO'}
           />
-          <BotonContador label="Reiniciar" onPress={reiniciar} variante="danger" />
+          <BotonContador
+            label="Reiniciar"
+            onPress={reiniciar}
+            variante="danger"
+          />
         </View>
 
         {/* 👇 TODO INTEGRADOR: agrega los contadores de Empanadas y Jugos
             repitiendo el estado (const [.., ..] = useState(0)) y sus botones. */}
+        {/* CHECK INTEGRADOR: contador de Empanadas */}
+        <ContadorDisplay valor={empanadas} etiqueta="Empanadas" />
+        <View style={styles.actions}>
+          <BotonContador
+            label="+1"
+            onPress={incrementarEmpanadas}
+            variante="primary"
+            disabled={estadoEmpanadas === 'MAXIMO'}
+          />
+          <BotonContador
+            label="-1"
+            onPress={decrementarEmpanadas}
+            variante="secondary"
+            disabled={estadoEmpanadas === 'MINIMO'}
+          />
+          <BotonContador
+            label="Reiniciar"
+            onPress={reiniciarEmpanadas}
+            variante="danger"
+          />
+        </View>
+
+        {/* CHECK INTEGRADOR: contador de Jugos */}
+        <ContadorDisplay valor={jugos} etiqueta="Jugos" />
+        <View style={styles.actions}>
+          <BotonContador
+            label="+1"
+            onPress={incrementarJugos}
+            variante="primary"
+            disabled={estadoJugos === 'MAXIMO'}
+          />
+          <BotonContador
+            label="-1"
+            onPress={decrementarJugos}
+            variante="secondary"
+            disabled={estadoJugos === 'MINIMO'}
+          />
+          <BotonContador
+            label="Reiniciar"
+            onPress={reiniciarJugos}
+            variante="danger"
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  container: {
     flex: 1,
-    backgroundColor: '#EFE6D6',
+    backgroundColor: '#F3F4F6',
   },
-  content: {
+  scrollContent: {
     padding: 20,
     gap: 16,
   },
   title: {
     fontSize: 24,
-    fontWeight: '900',
-    textTransform: 'uppercase',
+    fontWeight: '800',
+    textAlign: 'center',
+    marginVertical: 10,
     color: '#0A0A0A',
   },
   actions: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 10,
     justifyContent: 'center',
   },
