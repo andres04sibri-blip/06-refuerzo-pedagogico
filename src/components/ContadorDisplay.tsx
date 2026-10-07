@@ -26,7 +26,7 @@ export interface ContadorDisplayProps {
 }
 
 /**
- * Muestra el valor de un contador.
+ * Muestra el valor de un contador
  *
  * @remarks
  * Componente **presentacional** ("dummy"): no tiene estado ni hooks; solo recibe
@@ -37,7 +37,8 @@ export interface ContadorDisplayProps {
 export function ContadorDisplay({ valor, etiqueta }: ContadorDisplayProps) {
   return (
     <View style={styles.wrap}>
-      {/* 🤔 ¿Cómo muestras la etiqueta solo cuando viene, sin romper si falta? */}
+      {/* CHECK: ¿Cómo muestras la etiqueta solo cuando viene, sin romper si falta? */}
+      {Boolean(etiqueta) && <Text style={styles.etiqueta}>{etiqueta}</Text>}
       <Text style={styles.valor}>{valor}</Text>
     </View>
   );
